@@ -2,10 +2,10 @@
 /**
  * Qlog
  *
- * PHP logger. One class. Zero configuration. No dependencies.
+ * PHP logger. Zero configuration. No dependencies. One static class. Human readable log.
  *
  * @package    Qlog
- * @version    1.0.1
+ * @version    1.0.2
  * @author     Lawrence Lagerlof <llagerlof@gmail.com>
  * @copyright  2018 Lawrence Lagerlof
  * @link       http://github.com/llagerlof/Qlog
@@ -33,7 +33,7 @@ class Qlog
                 $arr_variable[$i] = '    ' . $line;
             }
             $output_variable = implode("\n", $arr_variable);
-            $separator = str_repeat('-', 80) . "\n\n";
+            $separator = ((!is_array($variable) && !is_object($variable)) ? "\n" : '') . str_repeat('-', 80) . "\n\n";
             $logged =
                 ((!empty($variable_name) && is_string($variable_name)) ? $variable_name . ":\n\n" : '') .
                 $output_variable . "\n" .
