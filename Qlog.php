@@ -5,13 +5,14 @@
  * PHP logger. One class. Zero configuration. No dependencies.
  *
  * @package    Qlog
- * @version    1.0.0
+ * @version    1.0.1
  * @author     Lawrence Lagerlof <llagerlof@gmail.com>
  * @copyright  2018 Lawrence Lagerlof
  * @link       http://github.com/llagerlof/Qlog
  * @license    https://opensource.org/licenses/MIT MIT
  */
-class Qlog {
+class Qlog
+{
     /**
      * Writes a variable to a log file in the same directory where the l() method was called
      *
