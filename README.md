@@ -1,5 +1,5 @@
 # Qlog
-PHP logger. Zero configuration. No dependencies. One static class. Human readable log.
+PHP logger for debugging purposes. Zero configuration. No dependencies. One static class. Human readable log.
 
 ## Quick start
 
