@@ -5,7 +5,7 @@
  * PHP logger for debugging purposes. Human readable log. Zero configuration. No dependencies. One static class.
  *
  * @package    Qlog
- * @version    2.0.0
+ * @version    2.0.1
  * @author     Lawrence Lagerlof <llagerlof@gmail.com>
  * @copyright  2018 Lawrence Lagerlof
  * @link       http://github.com/llagerlof/Qlog
@@ -38,7 +38,7 @@ class Qlog
 
         $backtrace = debug_backtrace();
         $log_location = $backtrace[0]['file'].'_qlog.log';
-        $write_success = is_writable(dirname($log_location)) ? file_put_contents($log_location, $logged, FILE_APPEND) : false;
+        $write_success = is_writable(dirname($log_location)) && !is_dir($log_location) ? file_put_contents($log_location, $logged, FILE_APPEND) : false;
 
         $open_html_pre = php_sapi_name() == 'cli' ? '' : '<pre>';
         $close_html_pre = php_sapi_name() == 'cli' ? '' : '</pre>';
