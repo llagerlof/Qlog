@@ -5,7 +5,7 @@
  * PHP logger for debugging purposes. Human readable log. Zero configuration. No dependencies. One static class.
  *
  * @package    Qlog
- * @version    2.0.1
+ * @version    2.1.0
  * @author     Lawrence Lagerlof <llagerlof@gmail.com>
  * @copyright  2018 Lawrence Lagerlof
  * @link       http://github.com/llagerlof/Qlog
@@ -32,7 +32,7 @@ class Qlog
         $output_variable = implode("\n", $arr_variable);
         $separator = ((!is_array($variable) && !is_object($variable)) ? "\n" : '') . str_repeat('-', 80) . "\n\n";
         $logged =
-            ((!empty($variable_name) && is_string($variable_name)) ? $variable_name . ":\n\n" : '') .
+            ((!empty($variable_name) && is_string($variable_name)) ? $variable_name . " : " . gettype($variable) : ':' . gettype($variable)) . "\n\n" .
             $output_variable . "\n" .
             $separator;
 
