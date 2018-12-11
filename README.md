@@ -34,7 +34,7 @@ The ```_qlog``` in the log file name is to easily find the log files generated b
 ### Log content example:
 
 ```
-$myvar:
+$myvar : array
 
     Array
     (
@@ -45,7 +45,7 @@ $myvar:
 
 --------------------------------------------------------------------------------
 
-$records:
+$records : array
 
     Array
     (
@@ -65,25 +65,25 @@ $records:
 
 --------------------------------------------------------------------------------
 
-$text:
+$text : string
 
     The quick brown fox jumps over the lazy dog.
 
 --------------------------------------------------------------------------------
 
-$number_int:
+$number : integer
 
     7
 
 --------------------------------------------------------------------------------
 
-$this_is_a_float:
+$value : double
 
     1234.19
 
 --------------------------------------------------------------------------------
 
-$myobject:
+$c : object
 
     stdClass Object
     (
