@@ -9,7 +9,7 @@
  * (for methods l() and ll() respectively).
  *
  * @package    Qlog
- * @version    2.1.1
+ * @version    2.1.3
  * @author     Lawrence Lagerlof <llagerlof@gmail.com>
  * @copyright  2019 Lawrence Lagerlof
  * @link       http://github.com/llagerlof/Qlog
@@ -22,10 +22,11 @@ class Qlog
      *
      * @param mixed $value The value to be logged.
      * @param string $value_name A text to be the title of the value in the log file.
+     * @param string $filename Change default log filename.
      *
      * @return string Return the logged data.
      */
-    public static function l($value, $value_name = null)
+    public static function l($value, $value_name = null, $filename = null)
     {
         $arr_value = explode("\n", print_r($value, true));
         foreach($arr_value as $i => $line) {
@@ -39,7 +40,19 @@ class Qlog
             $separator;
 
         $backtrace = debug_backtrace();
-        $log_location = $backtrace[0]['file'].'_qlog.log';
+
+        $filename = trim($filename);
+        if ($filename) {
+            $filename_has_path = preg_match('/(\/|\\\\)/', $filename);
+            if ($filename_has_path) {
+                $log_location = $filename;
+            } else {
+                $log_location = dirname($backtrace[0]['file']) . '/' . $filename;
+            }
+        } else {
+            $log_location = $backtrace[0]['file'].'_qlog.log';
+        }
+
         $write_success = is_writable(dirname($log_location)) && !is_dir($log_location) ? file_put_contents($log_location, $logged, FILE_APPEND) : false;
 
         $open_html_pre = php_sapi_name() == 'cli' ? '' : '<pre>';
@@ -52,10 +65,11 @@ class Qlog
      * Log a single line of data in the log file. The ll() stands for "Log Line".
      *
      * @param mixed $value The value to be logged.
+     * @param string $filename Change default log filename.
      *
      * @return string Return the logged data.
      */
-    public static function ll($value)
+    public static function ll($value, $filename = null)
     {
         if (!is_null($value)) {
             if (is_scalar($value)) {
@@ -70,7 +84,19 @@ class Qlog
         $logged = '[' . date('Y-m-d H:i:s') . '] ' . $parsed . "\n";
 
         $backtrace = debug_backtrace();
-        $log_location = $backtrace[0]['file'].'_ll_qlog.log';
+
+        $filename = trim($filename);
+        if ($filename) {
+            $filename_has_path = preg_match('/(\/|\\\\)/', $filename);
+            if ($filename_has_path) {
+                $log_location = $filename;
+            } else {
+                $log_location = dirname($backtrace[0]['file']) . '/' . $filename;
+            }
+        } else {
+            $log_location = $backtrace[0]['file'].'_ll_qlog.log';
+        }
+
         $write_success = is_writable(dirname($log_location)) && !is_dir($log_location) ? file_put_contents($log_location, $logged, FILE_APPEND) : false;
 
         $open_html_pre = php_sapi_name() == 'cli' ? '' : '<pre>';
