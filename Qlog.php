@@ -9,9 +9,9 @@
  * (for methods l() and ll() respectively).
  *
  * @package    Qlog
- * @version    2.1.3
+ * @version    2.1.4
  * @author     Lawrence Lagerlof <llagerlof@gmail.com>
- * @copyright  2019 Lawrence Lagerlof
+ * @copyright  2021 Lawrence Lagerlof
  * @link       http://github.com/llagerlof/Qlog
  * @license    https://opensource.org/licenses/MIT MIT
  */
@@ -28,19 +28,14 @@ class Qlog
      */
     public static function l($value, $value_name = null, $filename = null)
     {
+        $output_value = '';
         $arr_value = explode("\n", print_r($value, true));
+
         foreach($arr_value as $i => $line) {
             $arr_value[$i] = '    ' . $line;
         }
-        $output_value = implode("\n", $arr_value);
-        $separator = ((!is_array($value) && !is_object($value)) ? "\n" : '') . str_repeat('-', 80) . "\n\n";
-        $logged =
-            ((!empty($value_name) && is_string($value_name)) ? $value_name . " : " . gettype($value) : ':' . gettype($value)) . "\n\n" .
-            $output_value . "\n" .
-            $separator;
 
         $backtrace = debug_backtrace();
-
         $filename = trim($filename);
         if ($filename) {
             $filename_has_path = preg_match('/(\/|\\\\)/', $filename);
@@ -52,6 +47,14 @@ class Qlog
         } else {
             $log_location = $backtrace[0]['file'].'_qlog.log';
         }
+
+        $output_value .= implode("\n", $arr_value);
+        $separator = ((!is_array($value) && !is_object($value)) ? "\n" : '') . str_repeat('-', 80) . "\n\n";
+        $logged =
+            date('Y-m-d H:i:s') . "\n\n" .
+            ((!empty($value_name) && is_string($value_name)) ? $value_name . " : " . gettype($value) : ':' . gettype($value)) . "\n\n" .
+            $output_value . "\n" .
+            $separator;
 
         $write_success = is_writable(dirname($log_location)) && !is_dir($log_location) ? file_put_contents($log_location, $logged, FILE_APPEND) : false;
 
